@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive JavaScript Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+    }
+    .hidden {
+      display: none;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+    input {
+      display: block;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      width: 300px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Register</h2>
+  <form id="registerForm">
+    <label>
+      Username:
+      <input type="text" id="username" required>
+    </label>
+    <span class="error" id="usernameError"></span>
+
+    <label>
+      Email:
+      <input type="email" id="email" required>
+    </label>
+    <span class="error" id="emailError"></span>
+
+    <label>
+      Password:
+      <input type="password" id="password" required>
+    </label>
+    <input type="checkbox" id="togglePassword"> Show Password
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="successMessage" class="hidden">
+    🎉 Registration successful!
+  </div>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const username = document.getElementById('username');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    const successMessage = document.getElementById('successMessage');
+    const usernameError = document.getElementById('usernameError');
+    const emailError = document.getElementById('emailError');
+
+    // Toggle password visibility
+    togglePassword.addEventListener('change', function () {
+      password.type = this.checked ? 'text' : 'password';
+    });
+
+    // Form submission handler
+    form.addEventListener('submit', function (event) {
+      event.preventDefault(); // Stop form from submitting
+
+      let valid = true;
+      usernameError.textContent = '';
+      emailError.textContent = '';
+
+      if (username.value.trim() === '') {
+        usernameError.textContent = 'Username is required';
+        valid = false;
+      }
+
+      if (!email.value.includes('@')) {
+        emailError.textContent = 'Enter a valid email address';
+        valid = false;
+      }
+
+      if (valid) {
+        successMessage.classList.remove('hidden');
+        form.reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
